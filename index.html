@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Exército-BR | Sistema de Graduação</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white p-4">
+  <div class="container">
+    <h1 class="mb-4">Sistema de Graduação - Exército-BR Warface Clutch</h1>
+
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label class="form-label">Patente (1–1000):</label>
+        <input type="number" id="patente" class="form-control" min="0" max="1000">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Horas Jogadas:</label>
+        <input type="number" id="horas" class="form-control" min="0">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Pontos de Clã:</label>
+        <input type="number" id="pontos" class="form-control" min="0">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Dias no Clã:</label>
+        <input type="number" id="dias" class="form-control" min="0">
+      </div>
+      <div class="col-md-4 mt-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="sublider">
+          <label class="form-check-label">É Sub-líder?</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="terremoto">
+          <label class="form-check-label">Concluiu Terremoto Hardcore?</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="shark">
+          <label class="form-check-label">Concluiu Black Shark Pro?</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="assassinato">
+          <label class="form-check-label">Possui Assassinato?</label>
+        </div>
+      </div>
+    </div>
+
+    <button onclick="calcular()" class="btn btn-success mt-4">Calcular Graduação</button>
+
+    <div class="mt-4">
+      <h4>Total de Pontos: <span id="pontosTotais" class="text-info"></span></h4>
+      <h3>Posto / Graduação: <span id="resultado" class="text-warning"></span></h3>
+    </div>
+  </div>
+
+  <script>
+    function calcular() {
+      let patente = parseInt(document.getElementById('patente').value);
+      let horas = parseInt(document.getElementById('horas').value);
+      let pontosClan = parseInt(document.getElementById('pontos').value);
+      let dias = parseInt(document.getElementById('dias').value);
+      let sub = document.getElementById('sublider').checked;
+      let terremoto = document.getElementById('terremoto').checked;
+      let shark = document.getElementById('shark').checked;
+      let assassinato = document.getElementById('assassinato').checked;
+
+      let pontos = 0;
+
+      // Patente
+      if (patente >= 901) pontos += 310;
+	  else if (patente >= 800) pontos += 260;
+	  else if (patente >= 750) pontos += 245;
+	  else if (patente >= 700) pontos += 240;
+	  else if (patente >= 650) pontos += 230;
+	  else if (patente >= 550) pontos += 220;
+      else if (patente >= 501) pontos += 200;
+	  else if (patente >= 450) pontos += 180;
+	  else if (patente >= 400) pontos += 150;
+	  else if (patente >= 350) pontos += 125;
+	  else if (patente >= 300) pontos += 105;
+      else if (patente >= 250) pontos += 95;
+	  else if (patente >= 220) pontos += 90;
+	  else if (patente >= 200) pontos += 80;
+	  else if (patente >= 180) pontos += 75;
+	  else if (patente >= 150) pontos += 65;
+	  else if (patente >= 130) pontos += 55;
+	  else if (patente >= 120) pontos += 45;
+      else if (patente >= 100) pontos += 35;
+	  else if (patente >= 90) pontos += 25;
+	  else if (patente >= 80) pontos += 20;
+	  else if (patente >= 70) pontos += 15;
+      else if (patente >= 60) pontos += 10;
+	  else if (patente >= 51) pontos += 5;
+	  else if (patente >= 21) pontos += 1;
+		
+      // Horas
+      if (horas >= 3000) pontos += 180;
+	   else if (horas >= 2500) pontos += 120;
+	   else if (horas >= 2000) pontos += 90;
+      else if (horas >= 1500) pontos += 80;
+	  else if (horas >= 1200) pontos += 70;
+      else if (horas >= 1000) pontos += 60;
+	  else if (horas >= 900) pontos += 50;
+	  else if (horas >= 850) pontos += 45;
+	  else if (horas >= 750) pontos += 40;
+	  else if (horas >= 550) pontos += 35;
+      else if (horas >= 450) pontos += 30;
+      else if (horas >= 300) pontos += 20;
+      else if (horas >= 250) pontos += 15;
+	  else if (horas >= 100) pontos += 10;
+	  else if (horas >= 50) pontos += 5;
+	  else if (horas >= 25) pontos += 1;
+		
+		
+      // Dias
+      if (dias >= 120) pontos += 60;
+	  else if (dias >= 90) pontos += 30;
+      else if (dias >= 60) pontos += 20;
+      else if (dias >= 10) pontos += 10;
+	  else if (dias >= 5) pontos += 5;
+
+      // Pontos de clã
+      if (pontosClan >= 20000) pontos += 25;
+      else if (pontosClan >= 10000) pontos += 15;
+	  else if (pontosClan >= 8000) pontos += 10;
+      else if (pontosClan >= 2000) pontos += 5;
+
+      // Bônus
+      if (sub) pontos += 10;
+      if (terremoto) pontos += 15;
+      if (shark) pontos += 10;
+      if (assassinato) pontos += 10;
+
+      // Tabela de corte
+      const patentes = [
+        { nome: "Recruta", pontos: 0 },
+        { nome: "Soldado", pontos: 3 },
+        { nome: "Cabo", pontos: 10 },
+        { nome: "3º Sargento", pontos: 15 },
+        { nome: "2º Sargento", pontos: 35 },
+        { nome: "1º Sargento", pontos: 60 },
+        { nome: "Subtenente", pontos: 70 },
+        { nome: "Aspirante-a-Oficial", pontos: 90 },
+        { nome: "2º Tenente", pontos: 100 },
+        { nome: "1º Tenente", pontos: 120 },
+        { nome: "Capitão", pontos: 180 },
+        { nome: "Major", pontos: 250 },
+        { nome: "Tenente-Coronel", pontos: 300 },
+        { nome: "Coronel", pontos: 350 },
+        { nome: "General de Brigada", pontos: 400 },
+        { nome: "General de Divisão", pontos: 500 },
+        { nome: "General de Exército", pontos: 650 },
+      ];
+
+      let resultado = "Recruta";
+      for (let i = patentes.length - 1; i >= 0; i--) {
+        if (pontos >= patentes[i].pontos) {
+          resultado = patentes[i].nome;
+          break;
+        }
+      }
+
+      document.getElementById('resultado').textContent = resultado;
+      document.getElementById('pontosTotais').textContent = pontos;
+    }
+	
+	function inputsPreenchidos() {
+    return (
+      document.getElementById('patente').value &&
+      document.getElementById('horas').value &&
+      document.getElementById('pontos').value &&
+      document.getElementById('dias').value
+    );
+  }
+
+  document.getElementById('patente').addEventListener('input', () => {
+    if (inputsPreenchidos()) calcular();
+  });
+  </script>
+</body>
+</html>
