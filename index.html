@@ -55,128 +55,76 @@
   </div>
 
   <script>
-    function calcular() {
-      let patente = parseInt(document.getElementById('patente').value);
-      let horas = parseInt(document.getElementById('horas').value);
-      let pontosClan = parseInt(document.getElementById('pontos').value);
-      let dias = parseInt(document.getElementById('dias').value);
-      let sub = document.getElementById('sublider').checked;
-      let terremoto = document.getElementById('terremoto').checked;
-      let shark = document.getElementById('shark').checked;
-      let assassinato = document.getElementById('assassinato').checked;
+function calcular() {
+  let patente = parseInt(document.getElementById('patente').value);
+  let horas = parseInt(document.getElementById('horas').value);
+  let pontosClan = parseInt(document.getElementById('pontos').value);
+  let dias = parseInt(document.getElementById('dias').value);
+  let sub = document.getElementById('sublider').checked;
+  let terremoto = document.getElementById('terremoto').checked;
+  let shark = document.getElementById('shark').checked;
+  let assassinato = document.getElementById('assassinato').checked;
 
-      let pontos = 0;
+  let pontos = 0;
 
-      // Patente
-      if (patente >= 901) pontos += 310;
-	  else if (patente >= 800) pontos += 260;
-	  else if (patente >= 750) pontos += 245;
-	  else if (patente >= 700) pontos += 240;
-	  else if (patente >= 650) pontos += 230;
-	  else if (patente >= 550) pontos += 220;
-      else if (patente >= 501) pontos += 200;
-	  else if (patente >= 450) pontos += 180;
-	  else if (patente >= 400) pontos += 150;
-	  else if (patente >= 350) pontos += 125;
-	  else if (patente >= 300) pontos += 105;
-      else if (patente >= 250) pontos += 95;
-	  else if (patente >= 220) pontos += 90;
-	  else if (patente >= 200) pontos += 80;
-	  else if (patente >= 180) pontos += 75;
-	  else if (patente >= 150) pontos += 65;
-	  else if (patente >= 130) pontos += 55;
-	  else if (patente >= 120) pontos += 45;
-      else if (patente >= 100) pontos += 35;
-	  else if (patente >= 90) pontos += 25;
-	  else if (patente >= 80) pontos += 20;
-	  else if (patente >= 70) pontos += 15;
-      else if (patente >= 60) pontos += 10;
-	  else if (patente >= 51) pontos += 5;
-	  else if (patente >= 21) pontos += 1;
-		
-      // Horas
-      if (horas >= 3000) pontos += 180;
-	   else if (horas >= 2500) pontos += 120;
-	   else if (horas >= 2000) pontos += 90;
-      else if (horas >= 1500) pontos += 80;
-	  else if (horas >= 1200) pontos += 70;
-      else if (horas >= 1000) pontos += 60;
-	  else if (horas >= 900) pontos += 50;
-	  else if (horas >= 850) pontos += 45;
-	  else if (horas >= 750) pontos += 40;
-	  else if (horas >= 550) pontos += 35;
-      else if (horas >= 450) pontos += 30;
-      else if (horas >= 300) pontos += 20;
-      else if (horas >= 250) pontos += 15;
-	  else if (horas >= 100) pontos += 10;
-	  else if (horas >= 50) pontos += 5;
-	  else if (horas >= 25) pontos += 1;
-		
-		
-      // Dias
-      if (dias >= 120) pontos += 60;
-	  else if (dias >= 90) pontos += 30;
-      else if (dias >= 60) pontos += 20;
-      else if (dias >= 10) pontos += 10;
-	  else if (dias >= 5) pontos += 5;
+  // Multiplicadores simples
+  pontos += patente * 0.35;
+  pontos += horas * 0.06;
+  pontos += dias * 0.5;
+  pontos += pontosClan * 0.001;
 
-      // Pontos de clã
-      if (pontosClan >= 20000) pontos += 25;
-      else if (pontosClan >= 10000) pontos += 15;
-	  else if (pontosClan >= 8000) pontos += 10;
-      else if (pontosClan >= 2000) pontos += 5;
+  // Bônus fixos
+  if (sub) pontos += 10;
+  if (terremoto) pontos += 15;
+  if (shark) pontos += 10;
+  if (assassinato) pontos += 10;
 
-      // Bônus
-      if (sub) pontos += 10;
-      if (terremoto) pontos += 15;
-      if (shark) pontos += 10;
-      if (assassinato) pontos += 10;
+  // Tabela de corte
+  const patentes = [
+    { nome: "Recruta", pontos: 0 },
+    { nome: "Soldado", pontos: 3 },
+    { nome: "Cabo", pontos: 10 },
+    { nome: "3º Sargento", pontos: 15 },
+    { nome: "2º Sargento", pontos: 35 },
+    { nome: "1º Sargento", pontos: 60 },
+    { nome: "Subtenente", pontos: 70 },
+    { nome: "Aspirante-a-Oficial", pontos: 90 },
+    { nome: "2º Tenente", pontos: 100 },
+    { nome: "1º Tenente", pontos: 120 },
+    { nome: "Capitão", pontos: 180 },
+    { nome: "Major", pontos: 250 },
+    { nome: "Tenente-Coronel", pontos: 300 },
+    { nome: "Coronel", pontos: 350 },
+    { nome: "General de Brigada", pontos: 400 },
+    { nome: "General de Divisão", pontos: 500 },
+    { nome: "General de Exército", pontos: 650 },
+  ];
 
-      // Tabela de corte
-      const patentes = [
-        { nome: "Recruta", pontos: 0 },
-        { nome: "Soldado", pontos: 3 },
-        { nome: "Cabo", pontos: 10 },
-        { nome: "3º Sargento", pontos: 15 },
-        { nome: "2º Sargento", pontos: 35 },
-        { nome: "1º Sargento", pontos: 60 },
-        { nome: "Subtenente", pontos: 70 },
-        { nome: "Aspirante-a-Oficial", pontos: 90 },
-        { nome: "2º Tenente", pontos: 100 },
-        { nome: "1º Tenente", pontos: 120 },
-        { nome: "Capitão", pontos: 180 },
-        { nome: "Major", pontos: 250 },
-        { nome: "Tenente-Coronel", pontos: 300 },
-        { nome: "Coronel", pontos: 350 },
-        { nome: "General de Brigada", pontos: 400 },
-        { nome: "General de Divisão", pontos: 500 },
-        { nome: "General de Exército", pontos: 650 },
-      ];
-
-      let resultado = "Recruta";
-      for (let i = patentes.length - 1; i >= 0; i--) {
-        if (pontos >= patentes[i].pontos) {
-          resultado = patentes[i].nome;
-          break;
-        }
-      }
-
-      document.getElementById('resultado').textContent = resultado;
-      document.getElementById('pontosTotais').textContent = pontos;
+  let resultado = "Recruta";
+  for (let i = patentes.length - 1; i >= 0; i--) {
+    if (pontos >= patentes[i].pontos) {
+      resultado = patentes[i].nome;
+      break;
     }
-	
-	function inputsPreenchidos() {
-    return (
-      document.getElementById('patente').value &&
-      document.getElementById('horas').value &&
-      document.getElementById('pontos').value &&
-      document.getElementById('dias').value
-    );
   }
 
-  document.getElementById('patente').addEventListener('input', () => {
-    if (inputsPreenchidos()) calcular();
-  });
-  </script>
+  document.getElementById('resultado').textContent = resultado;
+  document.getElementById('pontosTotais').textContent = Math.round(pontos);
+}
+
+function inputsPreenchidos() {
+  return (
+    document.getElementById('patente').value &&
+    document.getElementById('horas').value &&
+    document.getElementById('pontos').value &&
+    document.getElementById('dias').value
+  );
+}
+
+document.getElementById('patente').addEventListener('input', () => {
+  if (inputsPreenchidos()) calcular();
+});
+</script>
+
 </body>
 </html>
