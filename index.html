@@ -67,6 +67,9 @@ function calcular() {
 
   let pontos = 0;
 
+  if (pontosClan > 100000) pontosClan = 100000;
+  if (dias > 120) dias = 120;
+
   // Multiplicadores simples
   pontos += patente * 0.35;
   pontos += horas * 0.06;
