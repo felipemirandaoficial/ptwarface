@@ -22,10 +22,6 @@
         <label class="form-label">Pontos de Clã:</label>
         <input type="number" id="pontos" class="form-control" min="0">
       </div>
-      <div class="col-md-3">
-        <label class="form-label">Dias no Clã:</label>
-        <input type="number" id="dias" class="form-control" min="0">
-      </div>
 	  <div class="col-md-3">
 		  <label class="form-label">K/D PVP:</label>
 		  <input type="number" id="kd" class="form-control" min="0" step="0.01">
@@ -74,7 +70,6 @@ function calcular() {
   let patente = parseInt(document.getElementById('patente').value);
   let horas = parseInt(document.getElementById('horas').value);
   let pontosClan = parseInt(document.getElementById('pontos').value);
-  let dias = parseInt(document.getElementById('dias').value);
   let kd = parseFloat(document.getElementById('kd').value);
   let sub = document.getElementById('sublider').checked;
   let oficial = document.getElementById('oficial').checked;
@@ -85,47 +80,43 @@ function calcular() {
 
   let pontos = 0;
 
-  // Limites
-  if (pontosClan > 100000) pontosClan = 100000;
-  if (dias > 120) dias = 120;
+  // Limite pontos de clã
+  if (pontosClan > 500000) pontosClan = 500000;
 
-  // Multiplicadores base
-  pontos += patente * 0.35;
-  pontos += horas * 0.06;
-  pontos += dias * 0.5;
-  pontos += pontosClan * 0.001;
+  // Novo cálculo
+  pontos += patente * 0.3;
+  pontos += horas * 0.03;
+  pontos += (pontosClan * patente) * 0.000001;
 
-  // K/D PVP
-  if (!isNaN(kd) && kd >= 0.7) pontos += kd * 10;
+  if (!isNaN(kd) && kd >= 0.5) pontos += kd * 10;
 
-  // Bônus fixos
-  if (sub) pontos += 10;
+  if (sub) pontos += 5;
   if (oficial) pontos += 5;
-  if (terremoto) pontos += 15;
-  if (shark) pontos += 10;
+  if (terremoto) pontos += 10;
+  if (shark) pontos += 5;
   if (cherno) pontos += 10;
-  if (assassinato) pontos += 10;
+  if (assassinato) pontos += 5;
 
-  // Tabela de corte
+  // Tabela de corte ajustada
   const patentes = [
     { nome: "Recruta", pontos: 0 },
-    { nome: "Soldado", pontos: 3 },
-    { nome: "Cabo", pontos: 10 },
-    { nome: "3º Sargento", pontos: 15 },
-    { nome: "2º Sargento", pontos: 35 },
-    { nome: "1º Sargento", pontos: 60 },
-    { nome: "Subtenente", pontos: 70 },
-    { nome: "Aspirante-a-Oficial", pontos: 90 },
-    { nome: "2º Tenente", pontos: 100 },
-    { nome: "1º Tenente", pontos: 120 },
-    { nome: "Capitão", pontos: 180 },
-    { nome: "Major", pontos: 250 },
-    { nome: "Tenente-Coronel", pontos: 300 },
-    { nome: "Coronel", pontos: 350 },
-    { nome: "General de Brigada", pontos: 400 },
-    { nome: "General de Divisão", pontos: 500 },
-    { nome: "General de Exército", pontos: 650 },
-    { nome: "Marechal", pontos: 1000 },
+    { nome: "Soldado", pontos: 10 },
+    { nome: "Cabo", pontos: 15 },
+    { nome: "3º Sargento", pontos: 25 },
+    { nome: "2º Sargento", pontos: 45 },
+    { nome: "1º Sargento", pontos: 70 },
+    { nome: "Subtenente", pontos: 90 },
+    { nome: "Aspirante-a-Oficial", pontos: 110 },
+    { nome: "2º Tenente", pontos: 140 },
+    { nome: "1º Tenente", pontos: 180 },
+    { nome: "Capitão", pontos: 230 },
+    { nome: "Major", pontos: 350 },
+    { nome: "Tenente-Coronel", pontos: 420 },
+    { nome: "Coronel", pontos: 500 },
+    { nome: "General de Brigada", pontos: 600 },
+    { nome: "General de Divisão", pontos: 700 },
+	{ nome: "General de Exercito", pontos: 800 },
+	{ nome: "Marechal", pontos: 900 },
   ];
 
   let resultado = "Recruta";
@@ -139,21 +130,7 @@ function calcular() {
   document.getElementById('resultado').textContent = resultado;
   document.getElementById('pontosTotais').textContent = Math.round(pontos);
 }
-
-function inputsPreenchidos() {
-  return (
-    document.getElementById('patente').value &&
-    document.getElementById('horas').value &&
-    document.getElementById('pontos').value &&
-    document.getElementById('dias').value
-  );
-}
-
-document.getElementById('patente').addEventListener('input', () => {
-  if (inputsPreenchidos()) calcular();
-});
 </script>
-
 
 </body>
 </html>
